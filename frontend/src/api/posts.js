@@ -1,6 +1,6 @@
 const baseURL = "http://127.0.0.1:8000/api/v1/posts/";
 
-const createPost = (data) => {
+export const createPost = (data) => {
     fetch(baseURL, {
         method: "POST",
         body: JSON.stringify(data),
@@ -10,4 +10,8 @@ const createPost = (data) => {
     })
 }
 
-export default createPost;
+export const getPosts = async (page) => {
+    let response = await fetch(baseURL + `?page=${page}`);
+    response = await response.json();
+    return response;
+}
