@@ -7,12 +7,12 @@ const MainHeader = ({ onCreatePost }) => {
     <header className={styles.header}>
       <h1 className={styles.logo}>
         <MdMessage />
-        React Poster
+        Django React Posts
       </h1>
       <p>
         <button className={styles.button} onClick={onCreatePost}>
           <MdPostAdd size={18} />
-          New Post
+          Nova publicação
         </button>
       </p>
     </header>

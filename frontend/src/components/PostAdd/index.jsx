@@ -14,11 +14,11 @@ function PostAdd({ onCancel, onAddPost }) {
   return (
     <form className={styles.form} onSubmit={submitHandler}>
       <p>
-        <label htmlFor="author">Author</label>
+        <label htmlFor="author">Autor</label>
         <input type="text" id="author" required />
       </p>
       <p>
-        <label htmlFor="message">Message</label>
+        <label htmlFor="message">Mensagem</label>
         <textarea id="message" required rows={3} />
       </p>
       <p className={styles.actions}>
