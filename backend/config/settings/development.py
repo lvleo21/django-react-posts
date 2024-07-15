@@ -12,7 +12,9 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'apps.core.api.paginations.BasePagination',
+    'PAGE_SIZE': 10
 }
 
 
