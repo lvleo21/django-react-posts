@@ -10,6 +10,10 @@ import { createPost, getPosts } from "../../api/posts";
 
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
+import { ClipLoader } from "react-spinners";
+
+import toast, { Toaster } from "react-hot-toast";
+
 const PostsList = ({ modalIsVisible, onCloseModal }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,17 +23,22 @@ const PostsList = ({ modalIsVisible, onCloseModal }) => {
 
   useEffect(() => {
     setLoading(true);
-    getPosts(pagination.currentPage).then((response) => {
-      setPosts(response.results);
-      setPagination({
-        count: response.count,
-        currentPage: response.current_page,
-        numPages: response.num_pages,
-        links: response.links,
+    getPosts(pagination.currentPage)
+      .then((response) => {
+        setPosts(response.results);
+        setPagination({
+          count: response.count,
+          currentPage: response.current_page,
+          numPages: response.num_pages,
+          links: response.links,
+        });
+        setLoading(false);        
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error("Ocorreu um erro ao carregar as publicações.");
+        setLoading(false);
       });
-      setLoading(false);
-      console.log(pagination);
-    });
   }, [pagination.currentPage]);
 
   const addPostHandler = (postData) => {
@@ -50,18 +59,20 @@ const PostsList = ({ modalIsVisible, onCloseModal }) => {
       ...pagination,
       currentPage: pagination.currentPage + operator,
     });
-  };
+  };  
 
   return (
     <>
+      <Toaster position="top-center" />
+
       {modalIsVisible && (
         <Modal onClose={onCloseModal}>
           <PostAdd onCancel={onCloseModal} onAddPost={addPostHandler} />
         </Modal>
       )}
       {loading && (
-        <div style={{ textAlign: "center", color: "white" }}>
-          <p>Carregando...</p>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <ClipLoader color="#ece1fa" size={100} />
         </div>
       )}
       {!loading && posts.length > 0 && (
